@@ -1,0 +1,6 @@
+@FullStackForge.Server_HostAddress = http://localhost:5177
+
+GET {{FullStackForge.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
