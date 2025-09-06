@@ -1,0 +1,29 @@
+<a routerLink="/login">powrót do strony głównej</a>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="username">Login:</label>
+    <input id="username" formControlName="username" type="text" />
+    <div *ngIf="submitted && registerForm.controls['username'].errors">
+      <small>Login jest wymagany.</small>
+    </div>
+  </div>
+  <div>
+    <label for="password">Hasło:</label>
+    <input id="password" formControlName="password" type="password" />
+    <div *ngIf="submitted && registerForm.controls['password'].errors">
+      <small *ngIf="registerForm.controls['password'].errors?.['required']">Hasło jest wymagane.</small>
+      <small *ngIf="registerForm.controls['password'].errors?.['minlength']">Hasło musi mieć co najmniej 6 znaków.</small>
+    </div>
+  </div>
+  <div>
+    <label for="confirmPassword">Powtórz hasło:</label>
+    <input id="confirmPassword" formControlName="confirmPassword" type="password" />
+    <div *ngIf="submitted && registerForm.controls['confirmPassword'].errors">
+      <small>Powtórzenie hasła jest wymagane.</small>
+    </div>
+    <div *ngIf="submitted && registerForm.errors?.['mismatch']">
+      <small>Hasła muszą być takie same.</small>
+    </div>
+  </div>
+  <button type="submit">Zarejestruj</button>
+</form>
