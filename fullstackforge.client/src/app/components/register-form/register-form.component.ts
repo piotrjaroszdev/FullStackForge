@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register-form',
@@ -10,7 +11,7 @@ export class RegisterFormComponent {
   registerForm: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -23,11 +24,14 @@ export class RegisterFormComponent {
       ? null : { mismatch: true };
   }
 
-  onSubmit() {
-    this.submitted = true;
-    if (this.registerForm.valid) {
-      // Tu można dodać logikę rejestracji
-      alert('Zarejestrowano!');
-    }
+onSubmit() {
+  this.submitted = true;
+  if (this.registerForm.valid) {
+    const { username, password } = this.registerForm.value;
+    this.authService.register({ username, password }).subscribe({
+      next: () => alert('Zarejestrowano!'),
+      error: err => alert('Błąd rejestracji: ' + err.message)
+    });
   }
+}
 }

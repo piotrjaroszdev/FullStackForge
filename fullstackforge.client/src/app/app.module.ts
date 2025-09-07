@@ -15,7 +15,8 @@ import { RegisterFormComponent } from './components/register-form/register-form.
     RegisterFormComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule,
+    BrowserModule, 
+    HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule
   ],
