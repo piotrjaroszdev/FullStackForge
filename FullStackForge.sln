@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36221.1 d17.14
+VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "fullstackforge.client", "fullstackforge.client\fullstackforge.client.esproj", "{85109CB4-1CFD-7C7C-9CBD-BE3112B86A85}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullStackForge.Server", "FullStackForge.Server\FullStackForge.Server.csproj", "{9B9B9901-09DB-49FE-BB70-3AAB90ACE92E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fullstackforge.data", "fullstackforge.data\fullstackforge.data.csproj", "{8F89606F-7517-45A9-80DB-8804CFE64668}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{9B9B9901-09DB-49FE-BB70-3AAB90ACE92E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B9B9901-09DB-49FE-BB70-3AAB90ACE92E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B9B9901-09DB-49FE-BB70-3AAB90ACE92E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F89606F-7517-45A9-80DB-8804CFE64668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F89606F-7517-45A9-80DB-8804CFE64668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F89606F-7517-45A9-80DB-8804CFE64668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F89606F-7517-45A9-80DB-8804CFE64668}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
