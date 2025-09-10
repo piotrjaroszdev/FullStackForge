@@ -1,5 +1,6 @@
 using fullstackforge.data;
 using fullstackforge.data.Models;
+using FullStackForge.Server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<AuthService>();
+
 
 builder.Services.AddDbContext<FullStackForageDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -34,24 +38,28 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // Read orgins
-var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+//var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
 // Add CORS policy
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDevClient", policy =>
     {
-        policy.WithOrigins(allowedOrigins ?? Array.Empty<string>())
+        policy.WithOrigins("https://127.0.0.1:57536")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
 
+
 var app = builder.Build();
+app.MapControllers();
 
 // Use CORS
 app.UseCors("AllowAngularDevClient");
 app.UseDefaultFiles();
 app.MapStaticAssets();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -62,8 +70,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
-app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 

@@ -6,16 +6,17 @@ namespace FullStackForge.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RegisterController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;
 
-        public RegisterController(AuthService authService)
+        public AuthController(AuthService authService)
         {
             _authService = authService;
         }
 
         [HttpPost]
+        [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             try
@@ -27,6 +28,12 @@ namespace FullStackForge.Server.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+
+        [HttpGet("test")]
+        public async Task<IActionResult> test()
+        {
+            return Ok();
         }
     }
 }
