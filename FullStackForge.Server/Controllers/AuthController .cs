@@ -16,12 +16,12 @@ namespace FullStackForge.Server.Controllers
         }
 
         [HttpPost]
-        [Route("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody] UserDto registerCredentials)
         {
             try
             {
-                var token = await _authService.RegisterAsync(dto.Username, dto.Password);
+                var token = await _authService.RegisterAsync(registerCredentials.Username, registerCredentials.Password);
                 return Ok(new { token });
             }
             catch (Exception ex)
@@ -31,11 +31,11 @@ namespace FullStackForge.Server.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] RegisterDto credentials)
+        public async Task<IActionResult> Login([FromBody] UserDto loginCredentials)
         {
             try
             {
-                var token = await _authService.LoginAsync(credentials.Username, credentials.Password);
+                var token = await _authService.LoginAsync(loginCredentials.Username, loginCredentials.Password);
                 return Ok(new { token });
             }
             catch (Exception ex)
