@@ -30,6 +30,20 @@ namespace FullStackForge.Server.Controllers
             }
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] RegisterDto credentials)
+        {
+            try
+            {
+                var token = await _authService.LoginAsync(credentials.Username, credentials.Password);
+                return Ok(new { token });
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
+        }
+
         [HttpGet("test")]
         public async Task<IActionResult> test()
         {

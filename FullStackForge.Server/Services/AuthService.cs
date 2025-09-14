@@ -1,5 +1,6 @@
 ﻿using fullstackforge.data;
 using fullstackforge.data.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -29,6 +30,22 @@ namespace FullStackForge.Server.Services
             var user = new User { Username = username, PasswordHash = passwordHash };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+
+            return GenerateJwtToken(user);
+        }
+
+        public async Task<string> LoginAsync(string username, string password)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username == username);
+
+            if (user == null)
+                throw new Exception("Użytkownik nie istnieje");
+
+            var isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
+
+            if (!isPasswordValid)
+                throw new Exception("Nieprawidłowe hasło");
 
             return GenerateJwtToken(user);
         }
