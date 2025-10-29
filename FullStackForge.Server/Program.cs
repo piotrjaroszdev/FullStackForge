@@ -16,7 +16,6 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<AuthService>();
 
-
 builder.Services.AddDbContext<FullStackForageDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -37,29 +36,28 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Read orgins
-//var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
-// Add CORS policy
+// Read origins from configuration (falls back to previous values if not configured)
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() 
+                     ?? new[] { "https://127.0.0.1:57536", "https://localhost:57536" };
+
+// Add CORS policy — origins come from config
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDevClient", policy =>
     {
-        policy.WithOrigins("https://127.0.0.1:57536")
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
-
 var app = builder.Build();
-app.MapControllers();
 
 // Use CORS
 app.UseCors("AllowAngularDevClient");
 app.UseDefaultFiles();
 app.MapStaticAssets();
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -69,7 +67,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// enable authentication middleware BEFORE authorization
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 

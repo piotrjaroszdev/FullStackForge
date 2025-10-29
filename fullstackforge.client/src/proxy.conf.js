@@ -7,9 +7,11 @@ const PROXY_CONFIG = [
   {
     context: [
       "/weatherforecast",
+      "/api" // proxy API calls to backend to avoid CORS in dev
     ],
     target,
-    secure: false
+    secure: false,
+    changeOrigin: true
   }
 ]
 

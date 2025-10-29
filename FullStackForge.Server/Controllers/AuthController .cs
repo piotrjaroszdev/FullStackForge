@@ -1,11 +1,13 @@
 ﻿using FullStackForge.Server.DTOs;
 using FullStackForge.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FullStackForge.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize] 
     public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;
@@ -16,6 +18,7 @@ namespace FullStackForge.Server.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] UserDto registerCredentials)
         {
@@ -31,6 +34,7 @@ namespace FullStackForge.Server.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] UserDto loginCredentials)
         {
             try
@@ -47,6 +51,7 @@ namespace FullStackForge.Server.Controllers
         [HttpGet("test")]
         public async Task<IActionResult> test()
         {
+            // ten endpoint wymaga ważnego tokena (brak [AllowAnonymous])
             return Ok();
         }
     }

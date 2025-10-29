@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://127.0.0.1:7182/api/auth'; 
+  // use relative URL so proxy.conf.js handles requests during ng serve
+  private apiUrl = '/api/auth';
 
   constructor(private http: HttpClient) {}
 
